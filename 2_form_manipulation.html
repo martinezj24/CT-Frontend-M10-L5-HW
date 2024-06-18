@@ -1,0 +1,109 @@
+<!--Task 1: Create an HTML Form with Input Fields-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        .error {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact Us</h1>
+    <form id="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <span class="error" id="name-error">Name is required</span>
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <span class="error" id="email-error">Valid email is required</span>
+        <br><br>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+        <span class="error" id="message-error">Message is required</span>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!--Task 2: Write JavaScript Code to Handle Form Submissions-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const messageError = document.getElementById('message-error');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting the traditional way
+
+                // Validate form
+                let isValid = validateForm();
+
+                if (isValid) {
+                    // Create an object to store user input
+                    let formData = {
+                        name: nameInput.value,
+                        email: emailInput.value,
+                        message: messageInput.value
+                    };
+
+                    // Log the user input to the console
+                    console.log('Form Submitted', formData);
+
+                    // Clear the form after submission
+                    form.reset();
+                }
+            });
+
+            function validateForm() {
+                let isValid = true;
+
+                // Validate Name
+                if (nameInput.value.trim() === '') {
+                    nameError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    nameError.style.display = 'none';
+                }
+
+                // Validate Email
+                if (emailInput.value.trim() === '' || !validateEmail(emailInput.value)) {
+                    emailError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    emailError.style.display = 'none';
+                }
+
+                // Validate Message
+                if (messageInput.value.trim() === '') {
+                    messageError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    messageError.style.display = 'none';
+                }
+
+                return isValid;
+            }
+
+            function validateEmail(email) {
+                // Simple email validation regex
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+        });
+    </script>
+</body>
+</html>

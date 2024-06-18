@@ -1,0 +1,89 @@
+<!-- Task 1: Create an HTML Structure with Elements to Be Styled Dynamically -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Styling with JavaScript</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+            cursor: pointer;
+        }
+        .hover-effect {
+            padding: 20px;
+            margin: 20px;
+            background-color: lightcoral;
+            transition: background-color 0.3s;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: lightgreen;
+            border: none;
+            cursor: pointer;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" onclick="changeColor()">Click me to change color</div>
+    <div class="hover-effect">Hover over me</div>
+    <div class="hover-effect">Hover over me too</div>
+    <button class="button" onclick="changeText(this)">Click me to change text</button>
+    <button class="button" onclick="changeSize()">Click me to change size of boxes</button>
+
+    <script>
+        
+        // Task 2: Write JavaScript Code to Dynamically Change the Color of the Box Element When Clicked
+
+        function changeColor() {
+            const box = document.getElementById('box');
+            const colors = ['lightblue', 'lightgreen', 'lightcoral', 'lightgoldenrodyellow', 'lightpink'];
+            const currentColor = box.style.backgroundColor;
+            let newColor = colors[Math.floor(Math.random() * colors.length)];
+
+            while (newColor === currentColor) {
+                newColor = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            box.style.backgroundColor = newColor;
+        }
+
+
+        // Task 3: Implement Additional Styling Changes Based on User Interaction
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const hoverElements = document.querySelectorAll('.hover-effect');
+
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseover', function() {
+                    this.style.backgroundColor = 'lightseagreen';
+                });
+
+                element.addEventListener('mouseout', function() {
+                    this.style.backgroundColor = 'lightcoral';
+                });
+            });
+        });
+
+        function changeText(button) {
+            button.textContent = "Text changed!";
+        }
+
+        function changeSize() {
+            const boxes = document.querySelectorAll('#box, .hover-effect');
+            boxes.forEach(box => {
+                box.style.width = '300px';
+                box.style.height = '300px';
+            });
+        }
+    </script>
+</body>
+</html>
